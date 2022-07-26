@@ -1,0 +1,30 @@
+<div class="new-task">
+  <div class="header">
+    <div class="checkbox-container">
+      <label>
+        <input class="done" type="checkbox" [(ngModel)]="task.done" />
+      </label>
+    </div>
+
+    <input
+      class="title"
+      input="text"
+      placeholder="Task title"
+      [ngClass]="{ done: task.done }"
+      [(ngModel)]="task.title"
+    />
+  </div>
+
+  <textarea
+    class="description"
+    input="text"
+    placeholder="Description"
+    rows="5"
+    [(ngModel)]="task.description"
+  ></textarea>
+
+  <div class="actions">
+    <button class="cancel" type="button" (click)="cancel()">Cancel</button>
+    <button class="save" type="button" (click)="save()">Add Task</button>
+  </div>
+</div>

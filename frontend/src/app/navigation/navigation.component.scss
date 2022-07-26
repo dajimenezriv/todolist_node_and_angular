@@ -1,0 +1,23 @@
+.mat-toolbar {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #3d3d3d;
+}
+
+.mat-toolbar-row {
+  padding: 0 !important;
+  padding-left: 30px !important;
+  margin: 0 !important;
+}
+
+.search {
+  background: url(/../assets/images/search.jpg);
+  background-repeat: no-repeat;
+  background-position: center left;
+  background-color: white;
+  padding: 10px;
+  padding-left: 30px;
+  border-radius: 5px;
+  border-color: inherit;
+  font-size: 14px;
+}

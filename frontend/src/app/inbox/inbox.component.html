@@ -1,0 +1,38 @@
+<div class="main">
+  <h2>Inbox</h2>
+
+  <ul class="tasks">
+    <li *ngFor="let task of tasks">
+      <div class="task" (click)="handleClick($event, task)">
+        <div class="header">
+          <div class="checkbox-container">
+            <label>
+              <input
+                type="checkbox"
+                name="checkbox"
+                [(ngModel)]="task.done"
+                (change)="handleClick($event, task)"
+              />
+            </label>
+          </div>
+  
+          <div class="title" [ngClass]="{ done: task.done }">
+            {{ task.title }}
+          </div>
+        </div>
+  
+        <div class="description">{{ task.description }}</div>
+        <div
+          class="datetime"
+          [ngClass]="{
+            past: task.datetime < today,
+            today: task.datetime.getDate() === today.getDate(),
+            tomorrow: task.datetime.getDate() === tomorrow.getDate()
+          }"
+        >
+          {{ task.datetime | date }}
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
