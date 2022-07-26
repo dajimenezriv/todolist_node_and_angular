@@ -2,6 +2,8 @@ const router = require('express').Router();
 const tasks = require('../models/tasks');
 
 router.get('/', async (request, response) => {
+  // if we want to test sentry
+  // foo(); // eslint-disable-line
   try {
     const res = await tasks.getTasks();
     response.status(200).send(res);
