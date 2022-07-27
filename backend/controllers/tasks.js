@@ -31,6 +31,15 @@ router.post('/', async (request, response) => {
   }
 });
 
+router.delete('/', async (request, response) => {
+  try {
+    const res = await tasks.deleteTasks();
+    response.status(200).send(res);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+});
+
 router.delete('/:id', async (request, response) => {
   try {
     const id = parseInt(request.params.id, 10);

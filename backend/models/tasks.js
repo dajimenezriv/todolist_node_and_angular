@@ -41,10 +41,15 @@ const getTask = (id) => new Promise((resolve, reject) => {
 
 const newTask = (task) => new Promise((resolve, reject) => {
   try {
-    const { title, description } = task;
+    const {
+      title, description, done, datetime,
+    } = task;
+
     pool.query(
-      'INSERT INTO tasks (title, description) VALUES ($1, $2) RETURNING *',
-      [title, description],
+      `INSERT INTO tasks 
+      (title, description, done, datetime)
+      VALUES ($1, $2, $3, $4) RETURNING *`,
+      [title, description, done, datetime],
       (error, result) => {
         if (error) reject(error);
         else resolve(result.rows[0]);
@@ -53,6 +58,16 @@ const newTask = (task) => new Promise((resolve, reject) => {
   } catch (err) {
     reject(err);
   }
+});
+
+const deleteTasks = () => new Promise((resolve, reject) => {
+  pool.query(
+    'DELETE FROM tasks',
+    (error, result) => {
+      if (error) reject(error);
+      else resolve(result.rows);
+    },
+  );
 });
 
 const deleteTask = (id) => new Promise((resolve, reject) => {
@@ -70,5 +85,6 @@ module.exports = {
   getTasks,
   getTask,
   newTask,
+  deleteTasks,
   deleteTask,
 };
