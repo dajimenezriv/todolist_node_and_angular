@@ -10,7 +10,9 @@ import { Task } from './task'
 export class TaskService {
   private tasksUrl = 'api/tasks'
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
   }
 
   constructor(private http: HttpClient) {}
@@ -41,14 +43,14 @@ export class TaskService {
   addTask(task: Task): Observable<Task> {
     return this.http.post<Task>(this.tasksUrl, task, this.httpOptions).pipe(
       tap((newTask: Task) => console.log(`added hero w/ id=${newTask.id}`)),
-      catchError(this.handleError<Task>('addTask')),
+      catchError(this.handleError<Task>('addTask'))
     )
   }
 
   deleteTask(id: Number): Observable<any> {
-    const url = `${this.tasksUrl}/${id}`;
+    const url = `${this.tasksUrl}/${id}`
     return this.http.delete<Task>(url, this.httpOptions).pipe(
-      tap(_ => console.log(`deleted task id=${id}`)),
+      tap((_) => console.log(`deleted task id=${id}`)),
       catchError(this.handleError<any>('deleteTask'))
     )
   }

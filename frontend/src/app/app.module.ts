@@ -4,7 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api'
+// import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api'
+// import { InMemoryDataService } from './in-memory-data.service'
 
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatSidenavModule } from '@angular/material/sidenav'
@@ -18,7 +19,6 @@ import { InboxComponent } from './inbox/inbox.component'
 import { NavigationComponent } from './navigation/navigation.component'
 import { UpcomingComponent } from './upcoming/upcoming.component'
 import { TaskDetailComponent } from './task-detail/task-detail.component'
-import { InMemoryDataService } from './in-memory-data.service'
 import { NewTaskComponent } from './new-task/new-task.component'
 
 @NgModule({
@@ -41,9 +41,11 @@ import { NewTaskComponent } from './new-task/new-task.component'
     MatButtonModule,
     FormsModule,
     HttpClientModule,
+    /*
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false
     })
+    */
   ],
   providers: [],
   bootstrap: [AppComponent]

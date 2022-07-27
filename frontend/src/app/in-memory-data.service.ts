@@ -14,9 +14,9 @@ export class InMemoryDataService {
       d.setDate(d.getDate() - 1 + i);
       tasks.push({
         id: i,
-        done: false,
         title: `Task ${i}`,
         description: `Description ${i}`,
+        done: false,
         datetime: d,
       })
     }
