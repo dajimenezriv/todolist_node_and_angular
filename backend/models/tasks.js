@@ -1,5 +1,7 @@
 const { Pool } = require('pg');
+const StatsD = require('hot-shots');
 const config = require('../utils/config');
+const logger = require('../utils/logger');
 
 const pool = new Pool({
   user: config.DB_USER,
@@ -9,7 +11,13 @@ const pool = new Pool({
   port: config.DB_PORT,
 });
 
+const client = new StatsD({
+  port: 8125,
+  errorHandler: (err) => logger.error(err),
+});
+
 const getTasks = () => new Promise((resolve, reject) => {
+  client.increment('getTasks()');
   pool.query(
     'SELECT * FROM tasks',
     (error, result) => {
@@ -20,6 +28,7 @@ const getTasks = () => new Promise((resolve, reject) => {
 });
 
 const getTask = (id) => new Promise((resolve, reject) => {
+  client.increment('getTask()');
   pool.query(
     'SELECT * FROM tasks WHERE id = $1 LIMIT 1',
     [id],
