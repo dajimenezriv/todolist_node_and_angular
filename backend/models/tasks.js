@@ -60,6 +60,28 @@ const newTask = (task) => new Promise((resolve, reject) => {
   }
 });
 
+const updateTask = (task) => new Promise((resolve, reject) => {
+  try {
+    const {
+      id, title, description, done, datetime,
+    } = task;
+
+    pool.query(
+      `UPDATE tasks
+      SET title=$1, description=$2, done=$3, datetime=$4
+      WHERE id=$5
+      RETURNING *`,
+      [title, description, done, datetime, id],
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result.rows[0]);
+      },
+    );
+  } catch (err) {
+    reject(err);
+  }
+});
+
 const deleteTasks = () => new Promise((resolve, reject) => {
   pool.query(
     'DELETE FROM tasks',
@@ -85,6 +107,7 @@ module.exports = {
   getTasks,
   getTask,
   newTask,
+  updateTask,
   deleteTasks,
   deleteTask,
 };

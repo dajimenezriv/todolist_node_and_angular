@@ -31,6 +31,15 @@ router.post('/', async (request, response) => {
   }
 });
 
+router.put('/', async (request, response) => {
+  try {
+    const res = await tasks.updateTask(request.body);
+    response.status(200).send(res);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+});
+
 router.delete('/', async (request, response) => {
   try {
     const res = await tasks.deleteTasks();
