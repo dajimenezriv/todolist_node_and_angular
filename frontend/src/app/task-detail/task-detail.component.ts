@@ -33,6 +33,9 @@ export class TaskDetailComponent implements OnInit {
 
   save(): void {
     if (this.task) {
+      // for some reason, when I save the date, it subtracts one day
+      // maybe days start at 0, not sure
+      this.task.datetime.setDate(this.task.datetime.getDate() + 1)
       this.taskService.updateTask(this.task)
         .subscribe(() => this.location.back())
     }

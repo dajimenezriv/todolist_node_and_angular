@@ -23,6 +23,14 @@
     [(ngModel)]="task.description"
   ></textarea>
 
+  <mat-form-field appearance="fill">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="task.datetime">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
   <div class="actions">
     <button class="cancel" type="button" (click)="cancel()">Cancel</button>
     <button class="save" type="button" (click)="save()">Save Task</button>
