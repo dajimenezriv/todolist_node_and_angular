@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
@@ -59,6 +59,20 @@ export class TaskService {
     return this.http.put<Task>(this.tasksUrl, task, this.httpOptions).pipe(
       tap((_) => console.log(`updated task id=${task.id}`)),
       catchError(this.handleError<any>('updateTask'))
+    )
+  }
+
+  searchTasks(term: string): Observable<Task[]> {
+    if (!term.trim()) return of([])
+
+    const params = new HttpParams().set('title', term)
+    return this.http.get<Task[]>(this.tasksUrl, { params }).pipe(
+      tap((x) =>
+        x.length
+          ? console.log(`found tasks matching "${term}"`)
+          : console.log(`no tasks matching "${term}"`)
+      ),
+      catchError(this.handleError<Task[]>('searchTasks', []))
     )
   }
 }

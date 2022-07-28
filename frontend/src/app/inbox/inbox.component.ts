@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'
 import { TaskService } from '../task.service'
 import { Task } from '../task'
 
@@ -14,26 +14,46 @@ export class InboxComponent implements OnInit {
 
   tasks: Task[] = []
 
-  constructor(private router: Router, private taskService: TaskService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private taskService: TaskService
+  ) {}
 
   ngOnInit(): void {
     this.tomorrow.setDate(this.tomorrow.getDate() + 1)
-    this.getTasks()
+    this.route.queryParams.subscribe((params) => {
+      const { term } = params
+      if (term) this.searchTasks(term)
+      else this.getTasks()
+    })
   }
 
   handleClick(e: any, task: Task): void {
     if (e.target.name === 'checkbox') {
-      this.save(task);
+      this.save(task)
     } else {
-      this.router.navigate(['task', task.id]);
+      this.router.navigate(['task', task.id])
     }
   }
 
   getTasks(): void {
     this.taskService.getTasks().subscribe((tasks) => {
-      tasks.forEach((task) => {
-        this.tasks.push({ ...task, datetime: new Date(task.datetime) })
-      })
+      this.tasks = tasks.map((task) => ({
+        ...task,
+        datetime: new Date(task.datetime)
+      }))
+    })
+  }
+
+  searchTasks(term: string): void {
+    // not working
+    this.taskService.searchTasks(term).subscribe((tasks) => {
+      console.log(tasks);
+      this.tasks = tasks.map((task) => ({
+        ...task,
+        datetime: new Date(task.datetime)
+      }))
     })
   }
 
